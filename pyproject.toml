@@ -4,6 +4,18 @@ version = "0.1.0-alpha.0"
 description = "Smart reversion of Django migrations based on Git branches"
 authors = ["Lorenzo Peña <lorinkoz@gmail.com>"]
 license = "MIT"
+readme = "README.rst"
+repository = "https://github.com/lorinkoz/django-unmigrate"
+# documentation = "https://django-unmigrate.readthedocs.io/"
+keywords = ["django", "git", "migrations"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Django",
+    "Framework :: Django :: 2.0",
+    "Framework :: Django :: 2.1",
+    "Framework :: Django :: 2.2",
+    "Framework :: Django :: 3.0",
+]
 
 [tool.poetry.dependencies]
 python = "^3.6"
