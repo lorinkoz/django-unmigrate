@@ -28,9 +28,15 @@ class Command(BaseCommand):
             "--kamikazee", action="store_true", help="Ignore DEBUG=True and run the command anyways.",
         )
 
+    def run_from_argv(self, argv):
+        self.from_argv = True
+        super().run_from_argv(argv)
+
     def handle(self, *args, **options):
         if not settings.DEBUG and not options["kamikazee"]:
             raise CommandError("Do not run with DEBUG=True, or pass --kamikazee.")
+        if not getattr(self, "from_argv", False):
+            raise CommandError("For your own protection, 'unmigrate' can only be run from the command line.")
         try:
             targets = get_targets(options["database"], options["ref"]).items()
         except GitError as error:
