@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "django-unmigrate"
+version = "0.1.0"
+description = "Smart reversion of Django migrations based on Git branches"
+authors = ["Lorenzo Peña <lorinkoz@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+
+[tool.poetry.dev-dependencies]
+black = "^19.10b0"
+
+[tool.black]
+line-length = 120
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
