@@ -41,6 +41,29 @@ Or if it's going to be ``master`` anyways, this will suffice::
 
 And that's it!
 
+A little deeper
+---------------
+
+Ok, you can do more than that.
+
+Do you need to unapply your migrations from the same branch, a few commits
+behind? Here's how::
+
+    python manage.py unmigrate HEAD~5
+    python manage.py unmigrate af332b
+    python manage.py unmigrate v1.33.7
+
+If you only want to see the target migrations::
+
+    python manage.py unmigrate --dry-run
+
+And if you just want to play with this, go ahead and unapply your migrations
+with ``fake``. Just don't forget to apply them again::
+
+    python manage.py unmigrate --fake
+    python manage.py migrate --fake
+
+
 Contributing
 ------------
 
