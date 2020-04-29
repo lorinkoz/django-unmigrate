@@ -23,16 +23,21 @@ django-unmigrate
 |
 
 If you are in a complex Django project, sometimes you will find yourself switching
-between multiple branches, each of which adds a number of database migrations.
-Before switching back to the ``master`` branch you will have to unapply all
-migrations that are specific to the current branch. To make things worse, in
-order to unapply Django migrations, you have to enter the migration that comes
-right before the first migration that the current branch introduces.
+between multiple branches, some of which can add a number of database migrations.
+Before switching back to ``master`` you will have to unapply all migrations that
+are specific to the current branch. To make things worse, in order to unapply
+Django migrations, you have to enter the migration that comes right before the
+first migration of the current branch. It's not that big of a deal, Django is
+smart enough to let you use an unambiguos prefix of any migration, but with
+this package you can speed things up a little bit.
 
-With django-unmigrate, you don't need to worry about that anymore. Standing on
-any branch, you can use::
+While standing on any branch, you can use::
 
     python manage.py unmigrate master
+
+Or if it's going to be ``master`` anyways, this will suffice::
+
+    python manage.py unmigrate
 
 And that's it!
 

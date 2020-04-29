@@ -6,7 +6,6 @@ authors = ["Lorenzo Peña <lorinkoz@gmail.com>"]
 license = "MIT"
 readme = "README.rst"
 repository = "https://github.com/lorinkoz/django-unmigrate"
-# documentation = "https://django-unmigrate.readthedocs.io/"
 keywords = ["django", "git", "migrations"]
 classifiers = [
     "Development Status :: 3 - Alpha",
