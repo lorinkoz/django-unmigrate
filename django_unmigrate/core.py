@@ -20,7 +20,10 @@ class GitError(Exception):
         return self.message
 
 
-def get_targets(database, ref="master"):
+def get_targets(database="default", ref="master"):
+    """
+    Produce target migrations from ``database`` and ``ref``.
+    """
     added_targets = get_added_migrations(ref)
     return get_parents_from_targets(added_targets, database)
 
@@ -28,7 +31,7 @@ def get_targets(database, ref="master"):
 def get_added_migrations(ref="master"):
     """
     Detect the added migrations when compared to ``ref``, and return them as
-    target tuples: (app_name, migration_name)
+    target tuples: ``(app_name, migration_name)``
     """
     try:
         # Getting repo
@@ -48,10 +51,10 @@ def get_added_migrations(ref="master"):
         raise GitError(str(error))
 
 
-def get_parents_from_targets(targets, database):
+def get_parents_from_targets(targets, database="default"):
     """
     Inspect the migration tree and return the relevant, common parents from the
-    given target tuples: (app_name, migration_name)
+    given target tuples: ``(app_name, migration_name)``
     """
     connection = connections[database]
     connection.prepare_database()
