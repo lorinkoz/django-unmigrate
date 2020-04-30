@@ -40,11 +40,12 @@ def get_added_migrations(ref="master"):
         # Getting diff
         here = set(repo.git.ls_tree("--name-only", "-r", "HEAD").splitlines())
         there = set(repo.git.ls_tree("--name-only", "-r", ref).splitlines())
+        now = set(repo.git.ls_files("--exclude-standard", "-om").splitlines())
         # TODO: improve migration detection
         # settings.MIGRATION_MODULES = {app_name: module_location}
         # the previous setting allows for customization, other than that, there is
         # an established default of app_name.migrations
-        migration_files = [x for x in here - there if "migrations/" in x]
+        migration_files = [x for x in ((here | now) - there) if "migrations/" in x]
         # Constructing targets
         return [(f.split(os.sep)[-3], f.split(os.sep)[-1].split(".")[0]) for f in migration_files]
     except GitCommandError as error:
