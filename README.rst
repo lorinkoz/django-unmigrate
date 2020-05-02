@@ -33,11 +33,11 @@ django-unmigrate
 If you are in a complex Django project, sometimes you will find yourself switching
 between multiple branches, some of which can add a number of database migrations.
 Before switching back to ``master`` you will have to unapply all migrations that
-are specific to the current branch. To make things worse, in order to unapply
-Django migrations, you have to enter the migration that comes right before the
-first migration of the current branch. It's not that big of a deal, Django is
-smart enough to let you use an unambiguos prefix of any migration, but with
-this package you can speed things up a little bit.
+are specific to the current branch. In order to unapply these migrations, you
+have to enter the migration that comes right before the first migration of the
+current branch. You have to search for it or infer from the migration name. It's
+not that big of a deal, Django is smart enough to let you use an unambiguos
+prefix of any migration, but with this package you can speed things up a little bit.
 
 While standing on any branch, you can use::
 
@@ -57,8 +57,8 @@ Ok, you can do more than that.
 Do you need to unapply your migrations from the same branch, a few commits
 behind? Here's how::
 
-    python manage.py unmigrate HEAD~5
-    python manage.py unmigrate af332b
+    python manage.py unmigrate HEAD~12
+    python manage.py unmigrate b13553d
     python manage.py unmigrate v1.33.7
 
 If you only want to see the target migrations::
@@ -81,7 +81,7 @@ Contributing
 - To run the test suite run ``make`` or ``make coverage``. The tests for this
   project live inside a small django project called ``dunm_sandbox``. Beware!
   This package uses Git to function, therefore, the tests expect a number of
-  commit hashes inside this repository to remain stable in order to function.
-  See `this meta file`_ for further details.
+  commit hashes inside this repository to be present and remain stable in order
+  to function. See `this meta file`_ for further details.
 
 .. _this meta file: dunm_sandbox/meta.py
