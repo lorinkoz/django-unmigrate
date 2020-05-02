@@ -35,10 +35,18 @@ between multiple branches, some of which can add a number of database migrations
 Before switching back to ``master`` you will have to unapply all migrations that
 are specific to the current branch. In order to unapply these migrations, you
 have to enter the migration that comes right before the first migration of the
-current branch. You have to search for it or infer from the migration name. It's
-not that big of a deal, Django is smart enough to let you use an unambiguos
-prefix of any migration, but with this package you can speed things up a little bit.
+current branch. If more than one of your apps are involved, you will have to do
+that for each one of them.
 
+If you leave your migration names unchanged, inferring the name of the right
+migration to target is not too difficult - Django is smart enough to let you use
+an unambiguous prefix of any migration name. But if you have renamed your
+migrations as `this article`_ recommends, then you need to do the searching
+manually.
+
+.. _this article: https://adamj.eu/tech/2020/02/24/how-to-disallow-auto-named-django-migrations/
+
+With ``django-unmigrate`` you can speed up the process.
 While standing on any branch, you can use::
 
     python manage.py unmigrate master
