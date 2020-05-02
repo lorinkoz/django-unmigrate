@@ -28,7 +28,7 @@ class Command(BaseCommand):
             "--kamikazee", action="store_true", help="Ignore DEBUG=False and run the command anyways.",
         )
 
-    def run_from_argv(self, argv):
+    def run_from_argv(self, argv):  # pragma: no cover
         self.from_argv = True
         super().run_from_argv(argv)
 

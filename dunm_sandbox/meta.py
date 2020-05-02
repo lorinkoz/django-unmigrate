@@ -1,3 +1,5 @@
+MIGRATION_ZERO_COMMIT = "64f13167b8cdc640eeb40970d76a664effd7acb9"
+
 COMMITS = {
     "13dd3de199a7ed06fbab98ba479cc2fbb7f83875": [
         ("myapp", "0002_mymodel_tz_created"),
