@@ -13,6 +13,14 @@ django-unmigrate
     :alt: Join the chat at https://gitter.im/django-unmigrate
     :target: https://gitter.im/django-unmigrate/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link
 
+.. image:: https://github.com/lorinkoz/django-unmigrate/workflows/code/badge.svg
+    :alt: Build status
+    :target: https://github.com/lorinkoz/django-unmigrate/actions
+
+.. image:: https://coveralls.io/repos/github/lorinkoz/django-unmigrate/badge.svg?branch=master
+    :alt: Code coverage
+    :target: https://coveralls.io/github/lorinkoz/django-unmigrate?branch=master
+
 .. image:: https://badge.fury.io/py/django-unmigrate.svg
     :alt: PyPi version
     :target: http://badge.fury.io/py/django-unmigrate
