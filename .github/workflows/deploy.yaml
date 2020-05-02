@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # We must fetch all history in order to be able to run Git related tests
       - name: Set up Python 3.7
         uses: actions/setup-python@v1
         with:
