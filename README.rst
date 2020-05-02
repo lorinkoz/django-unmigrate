@@ -78,3 +78,10 @@ Contributing
 - Join the discussion at https://gitter.im/django-unmigrate/community.
 - PRs are welcome! If you have questions or comments, please use the link
   above.
+- To run the test suite run ``make`` or ``make coverage``. The tests for this
+  project live inside a small django project called ``dunm_sandbox``. Beware!
+  This package uses Git to function, therefore, the tests expect a number of
+  commit hashes inside this repository to remain stable in order to function.
+  See `this meta file`_ for further details.
+
+.. _this meta file: dunm_sandbox/meta.py
