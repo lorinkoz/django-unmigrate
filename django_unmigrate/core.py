@@ -80,6 +80,7 @@ def get_parents_from_targets(targets, database="default"):
         parents = [x.key for x in loader.graph.node_map[target].parents if x.key[0] == target[0]]
         if not parents:
             return (target[0], None)
+        parents.sort()  # To consistently return same parent
         return parents[0]
 
     return {get_relevant_parent(target) for target in final_targets}
