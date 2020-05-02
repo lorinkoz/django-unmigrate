@@ -52,4 +52,12 @@ class Command(BaseCommand):
                     )
                 )
             else:
-                management.call_command("migrate", app, migration, fake=options["fake"], verbosity=options["verbosity"])
+                management.call_command(
+                    "migrate",
+                    app,
+                    migration,
+                    fake=options["fake"],
+                    verbosity=options["verbosity"],
+                    stdout=self.stdout,
+                    stderr=self.stderr,
+                )
