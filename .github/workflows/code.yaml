@@ -1,13 +1,5 @@
 name: code
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-  paths:
-    - pyproject.toml
-    - poetry.lock
-    - "**.py"
+on: [push]
 jobs:
   django-tests:
     runs-on: ubuntu-latest
