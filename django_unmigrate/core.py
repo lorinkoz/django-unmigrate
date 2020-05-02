@@ -45,9 +45,9 @@ def get_added_migrations(ref="master"):
         # settings.MIGRATION_MODULES = {app_name: module_location}
         # the previous setting allows for customization, other than that, there is
         # an established default of app_name.migrations
-        migration_files = [x for x in ((here | now) - there) if "migrations" + os.sep in x and "__init__" not in x]
+        migration_files = [x for x in ((here | now) - there) if "migrations/" in x and "__init__" not in x]
         # Constructing targets
-        return [(f.split(os.sep)[-3], f.split(os.sep)[-1].split(".")[0]) for f in migration_files]
+        return [(f.split("/")[-3], f.split("/")[-1].split(".")[0]) for f in migration_files]
     except GitCommandError as error:
         raise GitError(str(error))
 
