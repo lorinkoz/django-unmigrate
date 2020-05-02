@@ -45,7 +45,7 @@ def get_added_migrations(ref="master"):
         # settings.MIGRATION_MODULES = {app_name: module_location}
         # the previous setting allows for customization, other than that, there is
         # an established default of app_name.migrations
-        migration_files = [x for x in ((here | now) - there) if "migrations/" in x]
+        migration_files = [x for x in ((here | now) - there) if "migrations" + os.sep in x and "__init__" not in x]
         # Constructing targets
         return [(f.split(os.sep)[-3], f.split(os.sep)[-1].split(".")[0]) for f in migration_files]
     except GitCommandError as error:
@@ -71,9 +71,15 @@ def get_parents_from_targets(targets, database="default"):
             # This plan is a subset of an existing plan, so we ignore it
             continue
         final_targets.append(target)
-    # We only return the parent node of the same app, to avoid unapplying related
-    # migrations from other apps
-    return {
-        target: [x.key for x in loader.graph.node_map[target].parents if x.key[0] == target[0]]
-        for target in final_targets
-    }
+
+    def get_relevant_parent(target):
+        """
+        Returns only the first parent, or a target equivalent to migration zero.
+        We ignore parent nodes from other apps.
+        """
+        parents = [x.key for x in loader.graph.node_map[target].parents if x.key[0] == target[0]]
+        if not parents:
+            return (target[0], None)
+        return parents[0]
+
+    return {get_relevant_parent(target) for target in final_targets}

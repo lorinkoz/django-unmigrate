@@ -38,14 +38,18 @@ class Command(BaseCommand):
         if not getattr(self, "from_argv", False):
             raise CommandError("For your own protection, 'unmigrate' can only be run from the command line.")
         try:
-            targets = get_targets(options["database"], options["ref"]).items()
+            targets = get_targets(options["database"], options["ref"])
         except GitError as error:
             raise CommandError("Git says: {}".format(error))
-        for key, targets in targets:
-            for app, migration in targets:
-                if options["dry_run"] and options["verbosity"] >= 1:
-                    self.stdout.write(self.style.MIGRATE_LABEL("{}.{}".format(app, migration)))
-                else:
-                    management.call_command(
-                        "migrate", app, migration, fake=options["fake"], verbosity=options["verbosity"]
+        command = "python manage.py migrate" if options["verbosity"] > 1 else ""
+        for app, migration in targets:
+            if migration is None:
+                migration = "zero"
+            if options["dry_run"] and options["verbosity"] >= 1:
+                self.stdout.write(
+                    self.style.MIGRATE_HEADING(
+                        "{command} {app} {migration}".format(command=command, app=app, migration=migration)
                     )
+                )
+            else:
+                management.call_command("migrate", app, migration, fake=options["fake"], verbosity=options["verbosity"])
