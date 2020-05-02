@@ -7,3 +7,4 @@ class MyModel(models.Model):
     tz_created = models.DateTimeField(auto_now_add=True)
 
     is_paid = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
