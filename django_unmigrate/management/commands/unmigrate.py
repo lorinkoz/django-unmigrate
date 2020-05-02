@@ -57,6 +57,7 @@ class Command(BaseCommand):
                     app,
                     migration,
                     fake=options["fake"],
+                    no_color=options["no_color"],
                     verbosity=options["verbosity"],
                     stdout=self.stdout,
                     stderr=self.stderr,
