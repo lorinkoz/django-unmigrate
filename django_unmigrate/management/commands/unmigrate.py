@@ -25,7 +25,7 @@ class Command(BaseCommand):
             "--dry-run", action="store_true", help="Just print the target migrations.",
         )
         parser.add_argument(
-            "--kamikazee", action="store_true", help="Ignore DEBUG=False and run the command anyways.",
+            "--danger", action="store_true", help="Ignore DEBUG=False and run the command anyways.",
         )
 
     def run_from_argv(self, argv):  # pragma: no cover
@@ -33,8 +33,8 @@ class Command(BaseCommand):
         super().run_from_argv(argv)
 
     def handle(self, *args, **options):
-        if not settings.DEBUG and not options["kamikazee"]:
-            raise CommandError("Do not run with DEBUG=False, or pass --kamikazee.")
+        if not settings.DEBUG and not options["danger"]:
+            raise CommandError("Do not run with DEBUG=False, or pass --danger.")
         if not getattr(self, "from_argv", False):
             raise CommandError("For your own protection, 'unmigrate' can only be run from the command line.")
         try:

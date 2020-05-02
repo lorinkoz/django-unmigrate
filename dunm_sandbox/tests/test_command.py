@@ -25,12 +25,12 @@ class UnmigrateCommandDryRunTestCase(TestCase):
     def test_debug(self):
         with self.assertRaises(CommandError) as ctx:
             call_command("unmigrate")
-        self.assertEqual(str(ctx.exception), "Do not run with DEBUG=False, or pass --kamikazee.")
+        self.assertEqual(str(ctx.exception), "Do not run with DEBUG=False, or pass --danger.")
 
-    def test_debug_with_kamikazee(self):
+    def test_debug_with_danger(self):
         unmigrate = UnmigrateCommand()
         unmigrate.from_argv = True  # Need to skip argv check
-        call_command(unmigrate, kamikazee=True)
+        call_command(unmigrate, danger=True)
 
     @override_settings(DEBUG=True)  # Django always uses DEBUG=False, need to skip the debug check
     def test_bad_ref(self):
