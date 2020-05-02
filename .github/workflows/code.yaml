@@ -18,8 +18,23 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - uses: actions/cache@v1
+        if: startsWith(runner.os, 'Linux')
         with:
           path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-py${{ matrix.python-version }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-py-poetry-
+      - uses: actions/cache@v1
+        if: startsWith(runner.os, 'Windows')
+        with:
+          path: ~\AppData\Local\pypoetry\Cache
+          key: ${{ runner.os }}-py${{ matrix.python-version }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-py-poetry-
+      - uses: actions/cache@v1
+        if: startsWith(runner.os, 'macOS')
+        with:
+          path: ~/Library/Caches/pypoetry
           key: ${{ runner.os }}-py${{ matrix.python-version }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-py-poetry-
