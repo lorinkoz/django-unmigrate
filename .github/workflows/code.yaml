@@ -2,12 +2,12 @@ name: code
 on: [push]
 jobs:
   django-tests:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 4
       matrix:
+        os: ["ubuntu-latest", "windows-latest", "macos-latest"]
         python-version: [3.6, 3.7, 3.8]
-        django-version: ["~=2.0.0", "~=2.1.0", "~=2.2.0", "~=3.0.0"]
     steps:
       - uses: actions/checkout@v2
       # We must fetch all history in order to be able to run Git related tests
@@ -28,14 +28,11 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install poetry
           python -m poetry install
-      - name: Install Django specific version ${{ matrix.django-version }}
-        run: |
-          python -m poetry run pip install "Django${{ matrix.django-version }}"
       - name: Run Tests
         run: |
           python -m poetry run coverage run dunm_sandbox/manage.py test tests
       - name: Upload coverage to Coveralls
-        if: matrix.python-version == '3.6' && matrix.django-version == '~=2.0.0'
+        if: matrix.python-version == '3.6' && matrix.os == 'ubuntu-latest'
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
         run: |
