@@ -1,3 +1,9 @@
+# This repository contains a number of commits created on purpose to serve for
+# testing. Therefore, if for any reason someone ever needs to rebase past this
+# point, this file MUST BE updated accordingly, and maybe new intentional
+# commits must be created, so that tests may function again.
+
+
 MIGRATION_ZERO_COMMIT = "64f13167b8cdc640eeb40970d76a664effd7acb9"
 
 COMMITS = {
