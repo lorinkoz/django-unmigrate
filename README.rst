@@ -92,4 +92,4 @@ Contributing
   commit hashes inside this repository to be present and remain stable in order
   to function. See `this meta file`_ for further details.
 
-.. _this meta file: dunm_sandbox/meta.py
+.. _this meta file: https://github.com/lorinkoz/django-unmigrate/blob/master/dunm_sandbox/meta.py
