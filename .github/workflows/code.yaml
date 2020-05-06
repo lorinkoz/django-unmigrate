@@ -1,5 +1,13 @@
 name: code
-on: [push]
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    paths:
+      - pyproject.toml
+      - poetry.lock
+      - "**.py"
 jobs:
   django-tests:
     runs-on: ${{ matrix.os }}
