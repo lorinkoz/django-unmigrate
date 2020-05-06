@@ -14,23 +14,10 @@ class UnmigrateCommandDryRunTestCase(TestCase):
     Tests 'unmigrate' management command with --dry-run
     """
 
-    @override_settings(DEBUG=True)  # Django always uses DEBUG=False, need to skip the debug check
-    def test_no_argv(self):
-        with self.assertRaises(CommandError) as ctx:
-            call_command("unmigrate")
-        self.assertEqual(
-            str(ctx.exception), "For your own protection, 'unmigrate' can only be run from the command line."
-        )
-
     def test_debug(self):
-        with self.assertRaises(CommandError) as ctx:
-            call_command("unmigrate")
-        self.assertEqual(str(ctx.exception), "Do not run with DEBUG=False, or pass --danger.")
-
-    def test_debug_with_danger(self):
         unmigrate = UnmigrateCommand()
         unmigrate.from_argv = True  # Need to skip argv check
-        call_command(unmigrate, danger=True)
+        call_command(unmigrate, dry_run=True)
 
     @override_settings(DEBUG=True)  # Django always uses DEBUG=False, need to skip the debug check
     def test_bad_ref(self):
@@ -74,6 +61,24 @@ class UnmigrateCommandTestCase(TransactionTestCase):  # In order to test migrati
     """
     Tests 'unmigrate' management command
     """
+
+    @override_settings(DEBUG=True)  # Django always uses DEBUG=False, need to skip the debug check
+    def test_no_argv(self):
+        with self.assertRaises(CommandError) as ctx:
+            call_command("unmigrate")
+        self.assertEqual(
+            str(ctx.exception), "For your own protection, 'unmigrate' can only be run from the command line."
+        )
+
+    def test_debug(self):
+        with self.assertRaises(CommandError) as ctx:
+            call_command("unmigrate")
+        self.assertEqual(str(ctx.exception), "Do not run with DEBUG=False, or pass --danger.")
+
+    def test_debug_with_danger(self):
+        unmigrate = UnmigrateCommand()
+        unmigrate.from_argv = True  # Need to skip argv check
+        call_command(unmigrate, danger=True)
 
     @override_settings(DEBUG=True)  # Django always uses DEBUG=False, need to skip the debug check
     def test_full_unmigrate_by_commit(self):

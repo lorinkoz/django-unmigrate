@@ -33,7 +33,7 @@ class Command(BaseCommand):
         super().run_from_argv(argv)
 
     def handle(self, *args, **options):
-        if not settings.DEBUG and not options["danger"]:
+        if not settings.DEBUG and not options["danger"] and not options["dry_run"]:
             raise CommandError("Do not run with DEBUG=False, or pass --danger.")
         if not getattr(self, "from_argv", False):
             raise CommandError("For your own protection, 'unmigrate' can only be run from the command line.")
