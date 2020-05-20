@@ -25,8 +25,9 @@ django-unmigrate
     :alt: PyPi version
     :target: http://badge.fury.io/py/django-unmigrate
 
-.. image:: https://img.shields.io/pypi/dm/django-unmigrate
+.. image:: https://pepy.tech/badge/django-unmigrate/month
     :alt: Downloads
+    :target: https://pepy.tech/project/django-unmigrate/month
 
 |
 
