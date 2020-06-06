@@ -27,7 +27,7 @@ def get_targets(database="default", ref=MAIN_BRANCH):
     Produce target migrations from ``database`` and ``ref``.
     """
     added_targets = get_added_migrations(ref)
-    return get_parents_from_targets(added_targets, database)
+    return (added_targets, get_parents_from_targets(added_targets, database))
 
 
 def get_added_migrations(ref=MAIN_BRANCH):
@@ -62,7 +62,6 @@ def get_parents_from_targets(targets, database="default"):
     connection = connections[database]
     connection.prepare_database()
     loader = MigrationLoader(connection)
-    executor = MigrationExecutor(connection)
     plan_dict = {target: set(loader.graph.backwards_plan(target)) for target in targets}
     final_targets = []
     # Detecting overlapping plans
