@@ -47,5 +47,6 @@ class GetTargetsTestCase(TestCase):
             expected_parents = []
             if expected_migrations:
                 expected_parents = PARENTS[expected_migrations[0]]
-            targets = get_targets(ref=commit)
-            self.assertEqual(set(targets), set(expected_parents))
+            (added_targets, parent_target) = get_targets(ref=commit)
+            self.assertEqual(set(added_targets), set(expected_migrations))
+            self.assertEqual(set(parent_target), set(expected_parents))
