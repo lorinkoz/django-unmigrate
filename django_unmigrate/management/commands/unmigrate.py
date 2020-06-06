@@ -6,6 +6,8 @@ from django.db import DEFAULT_DB_ALIAS
 from django_unmigrate.core import get_targets, GitError
 from django_unmigrate.settings import MAIN_BRANCH
 
+import os
+
 
 class Command(BaseCommand):
     help = "Unapplies migrations that were added in relation to the passed Git ref."
@@ -28,6 +30,9 @@ class Command(BaseCommand):
         parser.add_argument(
             "--danger", action="store_true", help="Ignore DEBUG=False and run the command anyways.",
         )
+        parser.add_argument(
+            "--clean", action="store_true", help="Delete migration files after they get unmigrated.",
+        )
 
     def run_from_argv(self, argv):  # pragma: no cover
         self.from_argv = True
@@ -36,16 +41,21 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if not settings.DEBUG and not options["danger"] and not options["dry_run"]:
             raise CommandError("Do not run with DEBUG=False, or pass --danger.")
+
         if not getattr(self, "from_argv", False):
             raise CommandError("For your own protection, 'unmigrate' can only be run from the command line.")
+
         try:
-            targets = get_targets(options["database"], options["ref"])
+            (added_targets, parent_targets) = get_targets(options["database"], options["ref"])
         except GitError as error:
             raise CommandError("Git says: {}".format(error))
+
         command = "python manage.py migrate" if options["verbosity"] > 1 else ""
-        for app, migration in targets:
+
+        for app, migration in parent_targets:
             if migration is None:
                 migration = "zero"
+
             if options["dry_run"] and options["verbosity"] >= 1:
                 self.stdout.write(
                     self.style.MIGRATE_HEADING(
@@ -63,3 +73,9 @@ class Command(BaseCommand):
                     stdout=self.stdout,
                     stderr=self.stderr,
                 )
+
+        if options["clean"]:
+            for (app, migration) in added_targets:
+                file_name = f"{app}/migrations/{migration}.py"
+                self.stdout.write(self.style.MIGRATE_HEADING(f"Remove {file_name}"))
+                os.remove(file_name)
