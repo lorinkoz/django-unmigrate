@@ -1,9 +1,7 @@
 import os
 import sys
 
-from django.conf import settings
 from django.db import connections
-from django.db.migrations.executor import MigrationExecutor
 from django.db.migrations.loader import MigrationLoader
 
 from git import Repo
