@@ -89,6 +89,13 @@ forget to apply them again at the end::
     python manage.py unmigrate --fake
     python manage.py migrate --fake
 
+No more master
+--------------
+
+This package (still) uses ``master`` as the name of the default branch. If that
+is no longer the case for your repositories, you can define ``MAIN_BRANCH`` in
+your Django settings.
+
 Do you see potential?
 ---------------------
 
