@@ -9,6 +9,8 @@ from django.db.migrations.loader import MigrationLoader
 from git import Repo
 from git.exc import GitCommandError
 
+from .settings import MAIN_BRANCH
+
 
 class GitError(Exception):
     message = ""
@@ -20,7 +22,7 @@ class GitError(Exception):
         return self.message
 
 
-def get_targets(database="default", ref="master"):
+def get_targets(database="default", ref=MAIN_BRANCH):
     """
     Produce target migrations from ``database`` and ``ref``.
     """
@@ -28,7 +30,7 @@ def get_targets(database="default", ref="master"):
     return get_parents_from_targets(added_targets, database)
 
 
-def get_added_migrations(ref="master"):
+def get_added_migrations(ref=MAIN_BRANCH):
     """
     Detect the added migrations when compared to ``ref``, and return them as
     target tuples: ``(app_name, migration_name)``
