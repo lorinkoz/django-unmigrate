@@ -19,9 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # We must fetch all history in order to be able to run Git related tests
-      - run: |
-          git fetch --prune --unshallow
-          git fetch origin master:master
+      - name: Fetch main branch
+        run: git fetch origin master:master
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
