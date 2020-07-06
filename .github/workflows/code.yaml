@@ -20,7 +20,7 @@ jobs:
       # We must fetch all history in order to be able to run Git related tests
       - uses: actions/checkout@v2
         with:
-          ref: "master"
+          ref: "master:master"
           fetch-depth: 0
       - uses: actions/checkout@v2
       - run: git branch -a
