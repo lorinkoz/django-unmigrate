@@ -18,10 +18,9 @@ jobs:
         python-version: [3.6, 3.7, 3.8]
     steps:
       - uses: actions/checkout@v2
-      # We must fetch all history in order to be able to run Git related tests
-      - run: |
-          git fetch --prune --unshallow
-          git fetch origin master:master
+        # We must fetch all history in order to be able to run Git related tests
+        with:
+          fetch-depth: 0
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
