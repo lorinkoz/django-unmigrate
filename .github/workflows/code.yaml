@@ -17,10 +17,12 @@ jobs:
         os: ["ubuntu-latest", "windows-latest", "macos-latest"]
         python-version: [3.6, 3.7, 3.8]
     steps:
+      - uses: actions/checkout@v2
       # We must fetch all history in order to be able to run Git related tests
       - run: git fetch origin master:master
-      - uses: actions/checkout@v2
-      - run: git branch -a
+      - run: |
+          git branch -a
+          git status
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
