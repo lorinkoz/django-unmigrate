@@ -23,6 +23,7 @@ jobs:
           ref: "master"
           fetch-depth: 0
       - uses: actions/checkout@v2
+      - run: git branch -a
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
