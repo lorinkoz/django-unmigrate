@@ -53,7 +53,7 @@ With ``django-unmigrate`` you can speed up the process.
 Usage
 -----
 
-Add ``django-unmigrate`` to your ``INSTALLED_APPS``. This is required to make
+Add ``django_unmigrate`` to your ``INSTALLED_APPS``. This is required to make
 the ``unmigrate`` management command available.
 
 Then, while standing on any branch, you will be able to use::
