@@ -44,9 +44,7 @@ migration to target is not too difficult, because they are prefixed by default
 with a sequential number. Django also helps, being smart enough to let you use
 an unambiguous prefix of any migration name. Add a merge migration and the
 numbers will no longer be so obvious. Or if you have renamed your migration
-files as `this article`_ recommends, you will have to do the search manually.
-
-.. _this article: https://adamj.eu/tech/2020/02/24/how-to-disallow-auto-named-django-migrations/
+files to drop the sequential numbers you will have to do the search manually.
 
 With ``django-unmigrate`` you can speed up the process.
 
