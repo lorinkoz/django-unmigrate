@@ -1,6 +1,6 @@
 from io import StringIO
+from unittest.mock import patch
 
-from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import TestCase, TransactionTestCase, override_settings
@@ -55,6 +55,34 @@ class UnmigrateCommandDryRunTestCase(TestCase):
                 self.assertEqual(
                     set(stdout.read().strip().splitlines()), set(["{0} {1}".format(*x) for x in expected_parents])
                 )
+
+
+class UnmigrateCommandCleanTestCase(TransactionTestCase):
+    """
+    Tests 'unmigrate' management command with --clean
+    """
+
+    @patch("os.remove")
+    @override_settings(DEBUG=True)  # Django always uses DEBUG=False, need to skip the debug check
+    def test_full_unmigrate_by_commit(self, mocked_remove):
+        unmigrate = UnmigrateCommand()
+        unmigrate.from_argv = True  # Need to skip argv check
+        for commit, expected_migrations in COMMITS.items():
+            expected_migrations.sort()  # We know tuple-sorting our migrations yields chronological order
+            expected_parents = []
+            if expected_migrations:
+                expected_parents = PARENTS[expected_migrations[0]]
+            with StringIO() as stdout:
+                call_command(unmigrate, commit, clean=True, stdout=stdout)
+                stdout.seek(0)
+                stdout_str = stdout.read()
+                self.assertTrue(not expected_parents or "Unapplying " in stdout_str)
+                self.assertTrue(not expected_parents or "Remove " in stdout_str)
+                self.assertTrue(mocked_remove.called)
+            with StringIO() as stdout:
+                call_command("migrate", stdout=stdout)
+                stdout.seek(0)
+                self.assertTrue(not expected_parents or "Applying" in stdout.read())
 
 
 class UnmigrateCommandTestCase(TransactionTestCase):  # In order to test migrations, must be TransactionTestCase
