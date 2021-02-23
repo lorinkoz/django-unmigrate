@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-unmigrate"
-version = "0.1.4"
+version = "0.2.0"
 description = "Smart reversion of Django migrations based on Git diff"
 authors = ["Lorenzo Peña <lorinkoz@gmail.com>"]
 license = "MIT"
@@ -8,7 +8,7 @@ readme = "README.rst"
 repository = "https://github.com/lorinkoz/django-unmigrate"
 keywords = ["django", "git", "migrations"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Framework :: Django",
     "Framework :: Django :: 2.0",
     "Framework :: Django :: 2.1",
