@@ -3,7 +3,6 @@ import sys
 
 from django.db import connections
 from django.db.migrations.loader import MigrationLoader
-
 from git import Repo
 from git.exc import GitCommandError
 
@@ -66,7 +65,7 @@ def get_parents_from_targets(targets, database="default"):
     # Since targets could be nodes of the same path, we need to discard the
     # plans that are subsets of a bigger one
     for target, plan in plan_dict.items():
-        if any([plan & iter_plan == plan for iter_plan in plan_dict.values() if iter_plan != plan]):
+        if any(plan & iter_plan == plan for iter_plan in plan_dict.values() if iter_plan != plan):
             # This plan is a subset of an existing plan, so we ignore it
             continue
         final_targets.append(target)
