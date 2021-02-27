@@ -14,7 +14,10 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "ref", nargs="?", default=MAIN_BRANCH, help="Git ref to compare existing migrations.",
+            "ref",
+            nargs="?",
+            default=MAIN_BRANCH,
+            help="Git ref to compare existing migrations.",
         )
         parser.add_argument(
             "--database",
@@ -22,16 +25,24 @@ class Command(BaseCommand):
             help='Nominates a database to synchronize. Defaults to the "default" database.',
         )
         parser.add_argument(
-            "--fake", action="store_true", help="Mark migrations as run without actually running them.",
+            "--fake",
+            action="store_true",
+            help="Mark migrations as run without actually running them.",
         )
         parser.add_argument(
-            "--dry-run", action="store_true", help="Just print the target migrations.",
+            "--dry-run",
+            action="store_true",
+            help="Just print the target migrations.",
         )
         parser.add_argument(
-            "--danger", action="store_true", help="Ignore DEBUG=False and run the command anyways.",
+            "--danger",
+            action="store_true",
+            help="Ignore DEBUG=False and run the command anyways.",
         )
         parser.add_argument(
-            "--clean", action="store_true", help="Delete migration files after they get unmigrated.",
+            "--clean",
+            action="store_true",
+            help="Delete migration files after they get unmigrated.",
         )
 
     def run_from_argv(self, argv):  # pragma: no cover
