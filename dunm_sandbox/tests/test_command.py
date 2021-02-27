@@ -5,8 +5,8 @@ from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import TestCase, TransactionTestCase, override_settings
 
-from dunm_sandbox.meta import COMMITS, PARENTS, MIGRATION_ZERO_COMMIT
 from django_unmigrate.management.commands.unmigrate import Command as UnmigrateCommand
+from dunm_sandbox.meta import COMMITS, MIGRATION_ZERO_COMMIT, PARENTS
 
 
 class UnmigrateCommandDryRunTestCase(TestCase):
@@ -53,7 +53,7 @@ class UnmigrateCommandDryRunTestCase(TestCase):
                 )  # It's required to strip colored output, skipping verbosity check on purpose
                 stdout.seek(0)
                 self.assertEqual(
-                    set(stdout.read().strip().splitlines()), set(["{0} {1}".format(*x) for x in expected_parents])
+                    set(stdout.read().strip().splitlines()), {"{0} {1}".format(*x) for x in expected_parents}
                 )
 
 

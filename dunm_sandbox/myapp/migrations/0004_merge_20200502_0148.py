@@ -6,9 +6,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('myapp', '0003_mymodel_is_paid'),
-        ('myapp', '0003_mymodel_is_active'),
+        ("myapp", "0003_mymodel_is_paid"),
+        ("myapp", "0003_mymodel_is_active"),
     ]
 
-    operations = [
-    ]
+    operations = []

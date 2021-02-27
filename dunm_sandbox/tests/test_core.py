@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from dunm_sandbox.meta import COMMITS, PARENTS
 from django_unmigrate.core import GitError, get_added_migrations, get_parents_from_targets, get_targets
+from dunm_sandbox.meta import COMMITS, PARENTS
 
 
 class GetAddedMigrationsTestCase(TestCase):
@@ -33,7 +33,7 @@ class GetParentsFromTargetsTestCase(TestCase):
         parents = get_parents_from_targets(
             [("myapp", "0005_auto_20200502_0149"), ("myapp", "0004_merge_20200502_0148")]
         )
-        self.assertEqual(set(parents), set([("myapp", "0003_mymodel_is_active")]))
+        self.assertEqual(set(parents), {("myapp", "0003_mymodel_is_active")})
 
 
 class GetTargetsTestCase(TestCase):
