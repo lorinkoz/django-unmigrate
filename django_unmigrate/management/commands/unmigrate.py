@@ -1,12 +1,12 @@
+import os
+
 from django.conf import settings
 from django.core import management
 from django.core.management.base import BaseCommand, CommandError
 from django.db import DEFAULT_DB_ALIAS
 
-from django_unmigrate.core import get_targets, GitError
+from django_unmigrate.core import GitError, get_targets
 from django_unmigrate.settings import MAIN_BRANCH
-
-import os
 
 
 class Command(BaseCommand):
