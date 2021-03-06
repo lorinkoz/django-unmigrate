@@ -6,7 +6,6 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import DEFAULT_DB_ALIAS
 
 from django_unmigrate.core import GitError, get_targets
-from django_unmigrate.settings import MAIN_BRANCH
 
 
 class Command(BaseCommand):
@@ -16,8 +15,9 @@ class Command(BaseCommand):
         parser.add_argument(
             "ref",
             nargs="?",
-            default=MAIN_BRANCH,
-            help="Git ref to compare existing migrations.",
+            default=None,
+            help="Git ref to compare existing migrations. "
+            "Defaults to None, which tries to detect a main or master branch.",
         )
         parser.add_argument(
             "--database",

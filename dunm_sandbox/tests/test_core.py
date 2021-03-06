@@ -1,13 +1,41 @@
-from django.test import TestCase
+import os
+import sys
 
-from django_unmigrate.core import GitError, get_added_migrations, get_parents_from_targets, get_targets
+from django.test import TestCase
+from git import Repo
+
+from django_unmigrate.core import GitError, get_added_migrations, get_main_branch, get_parents_from_targets, get_targets
 from dunm_sandbox.meta import COMMITS, PARENTS
+
+
+class GetMainBranchTestCase(TestCase):
+    """
+    Tests core.get_main_branch
+    """
+
+    def test_master(self):
+        main_branch = get_main_branch()
+        self.assertEqual(main_branch, "master")
+
+    def test_main(self):
+        pathname = os.path.dirname(sys.argv[0])
+        repo = Repo(os.path.abspath(pathname), search_parent_directories=True)
+        repo.git.branch("main")
+        get_main_branch.cache_clear()
+        main_branch = get_main_branch()
+        self.assertEqual(main_branch, "main")
+        repo.git.branch("-d", "main")
+        get_main_branch.cache_clear()
 
 
 class GetAddedMigrationsTestCase(TestCase):
     """
     Tests core.get_added_migrations
     """
+
+    def test_plain(self):
+        response = get_added_migrations()
+        self.assertEqual(response, [])
 
     def test_by_commit(self):
         for commit, expected_migrations in COMMITS.items():
