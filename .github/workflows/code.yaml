@@ -30,7 +30,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: snok/install-poetry@v1.1.2
         with:
-          virtualenvs-create: false
+          virtualenvs-create: true
+          virtualenvs-in-project: true
       - uses: actions/cache@v1
         if: startsWith(runner.os, 'Linux')
         with:
