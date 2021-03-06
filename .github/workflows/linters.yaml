@@ -9,7 +9,7 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.6
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2
         with:
           path: .venv/
           key: ${{ runner.os }}-py3.6-${{ hashFiles('**/poetry.lock') }}
