@@ -31,9 +31,9 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: .venv/
-          key: ${{ runner.os }}-py${{ matrix.python-version }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          key: ${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
-            ${{ runner.os }}-py-poetry-
+            ${{ runner.os }}-py-
       - name: Install Dependencies
         run: |
           pip install --upgrade pip poetry
