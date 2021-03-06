@@ -57,9 +57,8 @@ jobs:
         run: poetry run coverage run dunm_sandbox/manage.py test tests
       - name: Upload coverage to Coveralls
         if: matrix.python-version == '3.6' && matrix.os == 'ubuntu-latest'
-        uses: coverallsapp/github-action@master
+        run: |
+          python -m install coveralls
+          coveralls
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./.coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
