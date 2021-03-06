@@ -53,6 +53,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install --upgrade poetry
+          poetry config virtualenvs.create false
           poetry install
       - name: Run Tests
         run: |
