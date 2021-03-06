@@ -56,11 +56,11 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Run Tests
         run: |
-          python -m poetry run coverage run dunm_sandbox/manage.py test tests
+          python -m coverage run dunm_sandbox/manage.py test tests
       - name: Upload coverage to Coveralls
         if: matrix.python-version == '3.6' && matrix.os == 'ubuntu-latest'
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
         run: |
-          python -m poetry run pip install coveralls
-          python -m poetry run coveralls
+          python -m pip install coveralls
+          python -m coveralls
