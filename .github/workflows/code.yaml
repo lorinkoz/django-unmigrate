@@ -58,7 +58,7 @@ jobs:
       - name: Upload coverage to Coveralls
         if: matrix.python-version == '3.6' && matrix.os == 'ubuntu-latest'
         run: |
-          python -m pip install coveralls
-          coveralls
+          poetry run pip install coveralls
+          poetry run coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
