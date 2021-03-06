@@ -60,5 +60,5 @@ jobs:
         run: |
           python -m install coveralls
           coveralls
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
