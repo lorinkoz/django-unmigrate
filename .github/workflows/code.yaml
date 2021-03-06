@@ -28,10 +28,6 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: snok/install-poetry@v1.1.2
-        with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
       - uses: actions/cache@v1
         if: startsWith(runner.os, 'Linux')
         with:
@@ -54,13 +50,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-py-poetry-
       - name: Install Dependencies
-        run: poetry install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade poetry
+          python -m poetry install
       - name: Run Tests
-        run: poetry run coverage run dunm_sandbox/manage.py test tests
+        run: |
+          python -m poetry run coverage run dunm_sandbox/manage.py test tests
       - name: Upload coverage to Coveralls
         if: matrix.python-version == '3.6' && matrix.os == 'ubuntu-latest'
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
         run: |
-          poetry run pip install coveralls
-          poetry run coveralls
+          python -m poetry run pip install coveralls
+          python -m poetry run coveralls
