@@ -1,12 +1,11 @@
 import os
 import sys
+from functools import lru_cache
 
 from django.db import connections
 from django.db.migrations.loader import MigrationLoader
 from git import Repo
 from git.exc import GitCommandError
-
-from .settings import MAIN_BRANCH
 
 
 class GitError(Exception):
@@ -19,19 +18,42 @@ class GitError(Exception):
         return self.message
 
 
-def get_targets(database="default", ref=MAIN_BRANCH):
+@lru_cache(maxsize=None)
+def get_main_branch():
+    """
+    Detects main branch of repository.
+    """
+    try:
+        # Getting repo
+        pathname = os.path.dirname(sys.argv[0])
+        repo = Repo(os.path.abspath(pathname), search_parent_directories=True)
+        branches = {x.strip(" *") for x in repo.git.branch("--list").splitlines()}
+        if "main" in branches:
+            return "main"
+        elif "master" in branches:
+            return "master"
+    except GitCommandError as error:  # pragma: no cover
+        raise GitError(str(error))
+    raise GitError("Unable to detect main branch of repository.")  # pragma: no cover
+
+
+def get_targets(database="default", ref=None):
     """
     Produce target migrations from ``database`` and ``ref``.
     """
+    if ref is None:
+        ref = get_main_branch()
     added_targets = get_added_migrations(ref)
     return (added_targets, get_parents_from_targets(added_targets, database))
 
 
-def get_added_migrations(ref=MAIN_BRANCH):
+def get_added_migrations(ref=None):
     """
     Detect the added migrations when compared to ``ref``, and return them as
     target tuples: ``(app_name, migration_name)``
     """
+    if ref is None:
+        ref = get_main_branch()
     try:
         # Getting repo
         pathname = os.path.dirname(sys.argv[0])
