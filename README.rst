@@ -83,22 +83,6 @@ forget to apply them again at the end::
     python manage.py unmigrate --fake
     python manage.py migrate --fake
 
-Do you see potential?
----------------------
-
-This app started as a quick-n-dirty hack to speed up my team's development in
-multiple Django projects. However, with your help, it can become more than that:
-
-- Do you find the migration diff detection code hackish? We agree, help us make
-  it more robust and aligned with the Django internals.
-- Do you use ``mercurial`` instead of ``git``? Help us with a ``mercurial``
-  adapter. Maybe another VCS? Please, help us as well!
-- Do you think this app can be used as a tool to generate automatic rollback
-  scripts for automatic Django deployments? We're thinking the same. Help us
-  shape the logic and give us a hand with the code!
-- Is there any other direction where you see potential here? We're open to hear
-  your ideas.
-
 Contributing
 ------------
 
