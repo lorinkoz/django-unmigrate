@@ -1,5 +1,6 @@
 import os
 
+from django.apps import apps
 from django.conf import settings
 from django.core import management
 from django.core.management.base import BaseCommand, CommandError
@@ -87,6 +88,7 @@ class Command(BaseCommand):
 
         if options["clean"]:
             for (app, migration) in added_targets:
-                file_name = f"{app}/migrations/{migration}.py"
+                app_path = apps.get_app_config(app).path
+                file_name = f"{app_path}/migrations/{migration}.py"
                 self.stdout.write(self.style.MIGRATE_HEADING(f"Remove {file_name}"))
                 os.remove(file_name)
