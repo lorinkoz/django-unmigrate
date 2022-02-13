@@ -16,7 +16,7 @@ jobs:
       max-parallel: 4
       matrix:
         os: ["ubuntu-latest", "windows-latest", "macos-latest"]
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
     steps:
       # We must fetch all history in order to be able to run Git related tests
       - uses: actions/checkout@v2
@@ -43,10 +43,20 @@ jobs:
       - name: Run Tests
         run: |
           poetry run coverage run dunm_sandbox/manage.py test tests
-      - name: Upload coverage to Coveralls
-        if: matrix.python-version == '3.6' && matrix.os == 'ubuntu-latest'
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-        run: |
-          poetry run pip install coveralls
-          poetry run coveralls
+          poetry run coverage lcov -o ./coverage/lcov.info
+      - name: Upload coverage to Coveralls in parallel
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: run-py${{ matrix.python-version }}
+          parallel: true
+  finish:
+    needs: django-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Finish report to Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
+
