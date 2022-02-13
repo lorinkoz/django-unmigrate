@@ -8,11 +8,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.6
+          python-version: 3.9
       - uses: actions/cache@v2
         with:
           path: .venv/
-          key: ${{ runner.os }}-py3.6-${{ hashFiles('**/poetry.lock') }}
+          key: ${{ runner.os }}-py3.9-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-py-
       - name: Install Dependencies
